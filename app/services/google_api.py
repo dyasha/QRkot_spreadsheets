@@ -58,14 +58,9 @@ async def spreadsheets_update_value(
     ]
 
     for pro in projects:
-        days = pro['second'] / (24 * 60 * 60)
-        days = int(days)
-        if days == 1:
-            days = str(days) + ' day, '
-        else:
-            days = str(days) + ' days, '
+        date = pro['close'] - pro['open']
         new_row = [str(pro['name']),
-                   days + str(pro['New']),
+                   str(date),
                    str(pro['description'])]
         table_values.append(new_row)
 
@@ -73,7 +68,7 @@ async def spreadsheets_update_value(
         'majorDimension': 'ROWS',
         'values': table_values
     }
-    response = await wrapper_services.as_service_account( # noqa
+    response = await wrapper_services.as_service_account(  # noqa
         service.spreadsheets.values.update(
             spreadsheetId=spreadsheetid,
             range='A1:E30',
