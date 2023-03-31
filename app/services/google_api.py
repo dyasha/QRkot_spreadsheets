@@ -18,7 +18,6 @@ async def spreadsheets_create(wrapper_services: Aiogoogle) -> str:
         service.spreadsheets.create(json=spreadsheet_body)
     )
     spreadsheet_id = response['spreadsheetId']
-    print('https://docs.google.com/spreadsheets/d/' + spreadsheet_id)
     return spreadsheet_id
 
 
