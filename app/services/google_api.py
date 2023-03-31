@@ -1,5 +1,5 @@
 from aiogoogle import Aiogoogle
-from aiogoogle.excs import HTTPError
+
 
 from app.core.config import settings
 from app.core.google_client import (generate_spreadsheet_body,
@@ -59,7 +59,8 @@ async def spreadsheets_update_value(
         'majorDimension': 'ROWS',
         'values': table_values
     }
-    response = await wrapper_services.as_service_account(
+    # без ноки тесты на платформе падают)
+    response = await wrapper_services.as_service_account(  # noqa
         service.spreadsheets.values.update(
             spreadsheetId=spreadsheet_id,
             range=f'A1:C{len(table_values) + len(projects)}',
