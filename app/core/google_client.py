@@ -27,3 +27,32 @@ cred = ServiceAccountCreds(scopes=SCOPES, **INFO)
 async def get_service():
     async with Aiogoogle(service_account_creds=cred) as aiogoogle:
         yield aiogoogle
+
+
+async def generate_spreadsheet_body(
+    locale: str,
+    sheet_title: str,
+    row_count: int,
+    column_count: int
+) -> str:
+    spreadsheet_body = {
+        'properties': {'title': f'Отчет от {settings.now_date_time}',
+                       'locale': locale},
+        'sheets': [{'properties': {'sheetType': 'GRID',
+                                   'sheetId': 0,
+                                   'title': sheet_title,
+                                   'gridProperties': {
+                                       'rowCount': row_count,
+                                       'columnCount': column_count}}}]
+    }
+    return spreadsheet_body
+
+
+async def generate_table_values(
+    main_line: list,
+    col_names: list
+) -> list[list, list, list]:
+    table_values = [['Отчет от', settings.now_date_time],
+                    main_line,
+                    col_names]
+    return table_values
