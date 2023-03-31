@@ -1,6 +1,5 @@
 from aiogoogle import Aiogoogle
 
-
 from app.core.config import settings
 from app.core.google_client import (generate_spreadsheet_body,
                                     generate_table_values)
