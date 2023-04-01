@@ -1,7 +1,10 @@
+from datetime import datetime
 from aiogoogle import Aiogoogle
 from aiogoogle.auth.creds import ServiceAccountCreds
 
 from app.core.config import settings
+
+FORMAT = "%Y/%m/%d %H:%M:%S"
 
 SCOPES = [
     'https://www.googleapis.com/auth/spreadsheets',
@@ -35,8 +38,9 @@ async def generate_spreadsheet_body(
     row_count: int,
     column_count: int
 ) -> str:
+    now_date_time = datetime.now().strftime(FORMAT)
     spreadsheet_body = {
-        'properties': {'title': f'Отчет от {settings.now_date_time}',
+        'properties': {'title': f'Отчет от {now_date_time}',
                        'locale': locale},
         'sheets': [{'properties': {'sheetType': 'GRID',
                                    'sheetId': 0,
@@ -52,7 +56,8 @@ async def generate_table_values(
     main_line: list,
     col_names: list
 ) -> list[list, list, list]:
-    table_values = [['Отчет от', settings.now_date_time],
+    now_date_time = datetime.now().strftime(FORMAT)
+    table_values = [['Отчет от', now_date_time],
                     main_line,
                     col_names]
     return table_values

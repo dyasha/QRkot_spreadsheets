@@ -1,9 +1,6 @@
-from datetime import datetime
 from typing import Optional
 
 from pydantic import BaseSettings, EmailStr
-
-FORMAT = "%Y/%m/%d %H:%M:%S"
 
 
 class Settings(BaseSettings):
@@ -23,7 +20,6 @@ class Settings(BaseSettings):
     auth_provider_x509_cert_url: Optional[str] = None
     client_x509_cert_url: Optional[str] = None
     email: Optional[str] = None
-    now_date_time = datetime.now().strftime(FORMAT)
 
     class Config:
         env_file = '.env'
